@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Готическая эстетика</title>
+  <!-- Подключение шрифтов и иконок -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Cormorant+Garamond:400,600,700&display=swap" rel="stylesheet" />
+  <style>
+    /* Базовые готические стили */
+    body {
+      background-color: #0a080c;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .gothic-text {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.05em;
+    }
+    .bg-dark-gothic {
+      background: linear-gradient(145deg, #1a1520 0%, #0d0a12 100%);
+    }
+    .text-shadow-gothic {
+      text-shadow: 0 0 15px rgba(120, 80, 130, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <!-- Шапка с навигацией -->
+      <v-app-bar app dark color="#1a1520" elevate-on-scroll>
+        <v-app-bar-nav-icon @click="drawer = !drawer" class="hidden-md-and-up"></v-app-bar-nav-icon>
+        <v-toolbar-title class="gothic-text headline font-weight-bold">
+          <span style="color: #b8a0c4;">🦇</span> Nocturna
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn text class="hidden-sm-and-down gothic-text" v-for="item in menuItems" :key="item.title" @click="scrollTo(item.link)">
+          {{ item.title }}
+        </v-btn>
+        <v-btn icon class="hidden-sm-and-down">
+          <v-icon>mdi-moon-waning-crescent</v-icon>
+        </v-btn>
+      </v-app-bar>
+
+      <!-- Боковое меню для мобильных -->
+      <v-navigation-drawer v-model="drawer" temporary dark color="#1a1520">
+        <v-list>
+          <v-list-item v-for="item in menuItems" :key="item.title" @click="scrollTo(item.link)">
+            <v-list-item-title class="gothic-text">{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+      <!-- Основное содержимое -->
+      <v-main>
+        <v-container fluid class="pa-0">
+
+          <!-- ГЕРОЙ-БАННЕР -->
+          <v-parallax
+            dark
+            src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+            height="600"
+            class="d-flex align-center justify-center"
+          >
+            <v-row align="center" justify="center" class="text-center">
+              <v-col cols="12" md="8">
+                <h1 class="display-2 font-weight-bold gothic-text text-shadow-gothic" style="color: #f0e6f5;">
+                  Элегия Тьмы
+                </h1>
+                <h2 class="headline font-weight-light mb-4" style="color: #c9b5d4; letter-spacing: 3px;">
+                  Готическая эстетика в каждой детали
+                </h2>
+                <v-btn color="#6a4c7a" dark x-large class="gothic-text" @click="scrollTo('lookbook')">
+                  Погрузиться
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-parallax>
+
+          <!-- РАЗДЕЛ: О ПРОЕКТЕ -->
+          <v-container id="about" class="py-12">
+            <v-row justify="center">
+              <v-col cols="12" md="8" class="text-center">
+                <h2 class="display-1 font-weight-light gothic-text" style="color: #d4c0df;">Мистическое вдохновение</h2>
+                <v-divider class="my-6" style="border-color: #6a4c7a; width: 100px; margin: 0 auto;"></v-divider>
+                <p class="subtitle-1" style="color: #b5a2c2; line-height: 1.8;">
+                  Проект «Nocturna» — это ода тёмной романтике, викторианской готике и современному дарк-стилю. 
+                  Мы создаём пространство, где тени обретают форму, а элегантность переплетается с тайной.
+                </p>
+                <v-chip-group active-class="deep-purple--text text--accent-4" class="mt-6">
+                  <v-chip dark color="#2d2233" v-for="tag in ['Викторианский стиль', 'Тёмная эстетика', 'Корсеты', 'Мистика']" :key="tag">
+                    {{ tag }}
+                  </v-chip>
+                </v-chip-group>
+              </v-col>
+            </v-row>
+          </v-container>
+
+          <!-- РАЗДЕЛ: КОЛЛЕКЦИЯ (LOOKBOOK) -->
+          <v-container id="lookbook" class="py-12 bg-dark-gothic" fluid>
+            <v-row justify="center">
+              <v-col cols="12" class="text-center">
+                <h2 class="display-1 font-weight-light gothic-text" style="color: #d4c0df;">Тёмная коллекция</h2>
+                <v-divider class="my-6" style="border-color: #6a4c7a; width: 100px; margin: 0 auto;"></v-divider>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6" md="4" v-for="item in lookbookItems" :key="item.title">
+                <v-card dark color="#1f1926" elevation="12" hover>
+                  <v-img :src="item.image" height="350" gradient="to bottom, rgba(0,0,0,0.1), rgba(10,8,12,0.8)"></v-img>
+                  <v-card-title class="gothic-text headline">{{ item.title }}</v-card-title>
+                  <v-card-subtitle class="gothic-text" style="color: #b5a2c2;">{{ item.subtitle }}</v-card-subtitle>
+                  <v-card-actions>
+                    <v-btn text color="#b8a0c4" class="gothic-text">Подробнее</v-btn>
+                    <v-spacer></v-spacer>
+                    <v-icon color="#b8a0c4">mdi-heart-outline</v-icon>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+
+          <!-- РАЗДЕЛ: ИНТЕРАКТИВНЫЙ КОМПОНЕНТ (Диалог) -->
+          <v-container id="contact" class="py-12">
+            <v-row justify="center">
+              <v-col cols="12" md="6" class="text-center">
+                <h2 class="display-1 font-weight-light gothic-text" style="color: #d4c0df;">Прикоснуться к тайне</h2>
+                <p class="subtitle-1" style="color: #b5a2c2;">Оставьте свой след в мире Nocturna</p>
+                <v-btn dark x-large color="#6a4c7a" class="gothic-text mt-6" @click="dialog = true">
+                  Открыть портал
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+
+          <!-- ФУТЕР -->
+          <v-footer dark color="#0d0a12" padless>
+            <v-row justify="center" no-gutters class="py-6">
+              <v-btn v-for="link in footerLinks" :key="link" text rounded class="gothic-text" style="color: #7a6788;">
+                {{ link }}
+              </v-btn>
+              <v-col cols="12" class="text-center mt-4" style="color: #5a4a66; font-size: 0.8rem;">
+                &copy; {{ new Date().getFullYear() }} Nocturna — Готическая эстетика. Создано в рамках изучения Vuetify.
+              </v-col>
+            </v-row>
+          </v-footer>
+        </v-container>
+      </v-main>
+
+      <!-- ДИАЛОГ (модальное окно) -->
+      <v-dialog v-model="dialog" max-width="500" dark>
+        <v-card color="#1f1926">
+          <v-card-title class="gothic-text headline" style="color: #d4c0df;">
+            <v-icon left color="#b8a0c4">mdi-candle</v-icon>
+            Шёпот ночи
+          </v-card-title>
+          <v-card-text class="subtitle-1" style="color: #b5a2c2;">
+            Вы открыли портал в мир готической эстетики. Здесь тени оживают, а стиль обретает голос.
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text color="#b8a0c4" class="gothic-text" @click="dialog = false">Закрыть</v-btn>
+            <v-btn color="#6a4c7a" class="gothic-text" @click="dialog = false">Принять</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <!-- Снэкбар (уведомление) -->
+      <v-snackbar v-model="snackbar" :timeout="3000" color="#2d2233" dark top>
+        <span class="gothic-text">Добро пожаловать в мир Nocturna</span>
+        <template v-slot:action>
+          <v-btn text color="#b8a0c4" @click="snackbar = false">Закрыть</v-btn>
+        </template>
+      </v-snackbar>
+
+    </v-app>
+  </div>
+
+  <!-- Подключение Vue и Vuetify -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.7.4/dist/vuetify.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
